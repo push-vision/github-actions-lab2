@@ -4,17 +4,20 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}  # Use matrix for OS
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-12, windows-latest]  # Define OSes in the matrix
-        py-version: [3.7, 3.8, 3.9]  # Define Python versions in the matrix
+        os: [ubuntu-latest, macos-12, windows-latest]
+        py-version: [3.7, 3.8, 3.9]
+        exclude:  # Exclude specific combinations
+          - os: macos-12
+            py-version: 3.9
 
     steps:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.py-version }}  # Use matrix for Python versions
+        python-version: ${{ matrix.py-version }}
 
     - name: Check Python version
-      run: python --version  # Optional: Verify the installed Python version
+      run: python --version
